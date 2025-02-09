@@ -1,10 +1,13 @@
+import QuestionDisplay from "./components/QuestionDisplay"
+import AnswerBox from "./components/AnswerBox"
 
 function App() {
 
   return (
-    <>
-      <p> japassive </p>
-    </>
+    <div className="app-box">
+      <QuestionDisplay />
+      <AnswerBox />
+    </div>
   )
 }
 
