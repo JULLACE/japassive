@@ -8,12 +8,14 @@ let shortJSON = { 'words': [] }
 
 
 for (const index in dict.words) {
-    let posArray = dict.words[index].sense[0].partOfSpeech
+    let word = dict.words[index]
+
+    let posArray = word.sense[0].partOfSpeech
     if ((posArray.includes('vi') || posArray.includes('vt')) && !posArray.includes('vs')) {
-        let word = dict.words[index]
+        let trimmedWord = { 'kanji': word.kanji, 'kana': word.kana, 'partOfSpeech': word.sense[0].partOfSpeech }
         
-        allJSON.words.push(word)
-        if (index < 5000) shortJSON.words.push(word)
+        allJSON.words.push(trimmedWord)
+        if (index < 5000) shortJSON.words.push(trimmedWord)
     }
 }
 
