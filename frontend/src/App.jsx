@@ -1,20 +1,21 @@
 import QuestionDisplay from "./components/QuestionDisplay"
-import AnswerBox from "./components/AnswerBox"
 
 import api from './services/api'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 function App() {
+  const [dict, setDict] = useState([])
 
   useEffect(() => {
     api.getWords()
-    .then(res => console.log(res))
+      .then(res => {
+        setDict(res.words)
+      })
   }, [])
 
   return (
     <div className="app-box">
-      <QuestionDisplay />
-      <AnswerBox />
+      <QuestionDisplay dict={dict} />
     </div>
   )
 }
