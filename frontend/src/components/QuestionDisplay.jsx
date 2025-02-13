@@ -19,9 +19,11 @@ const QuestionDisplay = ({ dict }) => {
             : selectedWord.kana[0].text
         
         setQuestion(text)
+        console.log(answer)
     }
 
-    useEffect(() => {bind(document.getElementById('ans'))}, [])
+    useEffect(() => { bind(document.getElementById('ans')) }, [])
+    useEffect(() => { if (dict.length) changeQuestion() }, [dict])
 
     return (
         <>
@@ -30,7 +32,7 @@ const QuestionDisplay = ({ dict }) => {
             </div>
             <div className="a-box">
                 <form onSubmit={sendAnswer}>
-                    <input id="ans" name="answer" value={answer} onChange={({target}) => setAnswer(target.value)}/>
+                    <input id="ans" name="answer" value={answer} onInput={({target}) => setAnswer(target.value)}/>
                 </form>
             </div>
         </>
