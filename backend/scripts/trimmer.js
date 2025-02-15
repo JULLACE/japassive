@@ -1,6 +1,6 @@
 // This file assumes JMDict (json) common english is installed
 // Found here: https://github.com/scriptin/jmdict-simplified
-const dict = require('./JMdict/jmdict-eng-common.json')
+const dict = require('../data/JMdict/jmdict-eng-common.json')
 const fs = require('fs')
 
 let allJSON = { 'words': [] }

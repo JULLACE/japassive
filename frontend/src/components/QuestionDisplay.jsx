@@ -32,7 +32,12 @@ const QuestionDisplay = ({ dict }) => {
             </div>
             <div className="a-box">
                 <form onSubmit={sendAnswer}>
-                    <input id="ans" name="answer" value={answer} onInput={({target}) => setAnswer(target.value)}/>
+                    <input 
+                        id="ans" 
+                        name="answer" 
+                        value={answer} 
+                        onInput={({target}) => setAnswer(target.value)}
+                    />
                 </form>
             </div>
         </>
