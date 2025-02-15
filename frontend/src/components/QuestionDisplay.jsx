@@ -4,22 +4,53 @@ import { bind } from 'wanakana'
 const QuestionDisplay = ({ dict }) => {
     const [answer, setAnswer] = useState('')
     const [question, setQuestion] = useState('')
+    const [correct, setCorrect] = useState('')
+    const [resultState, setResultState] = useState(true)
 
     const sendAnswer = (e) => {
         e.preventDefault()
-        changeQuestion()
+
+        if (answer === '') {
+            // do something and return
+            return
+        }
+
+        if (resultState) checkAnswer()
+        else {
+            defaultStyles()
+            changeQuestion()
+        }
+
+        setResultState(!resultState)
+    }
+
+    const checkAnswer = () => {
+        document.getElementById('ans').readOnly = true
+
+        if (answer === correct) {
+            setQuestion('ding dong')
+            document.getElementById('ques').className = 'q-box q-box-correct'
+        }
+        else {
+            setQuestion(`err... ${correct}`)
+            document.getElementById('ques').className = 'q-box q-box-wrong'
+        }
+    }
+
+    const defaultStyles = () => {
+        document.getElementById('ans').readOnly = false
+        document.getElementById('ques').className = 'q-box'
     }
 
     const changeQuestion = () => {
-        // Eventually this logic will become unnecessary
-        // since server will send word + answer cleanly
         let selectedWord = dict[Math.floor(Math.random() * dict.length)]
         let text = selectedWord.kanji && selectedWord.kanji.length
             ? selectedWord.kanji[0].text
             : selectedWord.kana[0].text
         
         setQuestion(text)
-        console.log(dict)
+        setCorrect(selectedWord.answer)
+        setAnswer('')
     }
 
     useEffect(() => { bind(document.getElementById('ans')) }, [])
@@ -27,7 +58,7 @@ const QuestionDisplay = ({ dict }) => {
 
     return (
         <>
-            <div className="q-box">
+            <div id='ques' className="q-box">
                 <p> {question} </p>
             </div>
             <div className="a-box">

@@ -17,7 +17,7 @@ app.get('/words', (request, response) => {
     jmdict['words'].forEach(word => {
         let text = word.kana[0].text
         let ans = convert(text, word.partOfSpeech)
-        res.words.push({ 'kanji': word.kanji, 'kana': word.kana, 'ans': ans})
+        res.words.push({ 'kanji': word.kanji, 'kana': word.kana, 'answer': ans })
     })
 
     response.json(res)
