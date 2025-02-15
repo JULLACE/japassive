@@ -1,6 +1,7 @@
 const express = require('express')
 const cors = require('cors')
 const jmdict = require('./data/short-verbs.json')
+const { convert } = require('./utils/converter')
 
 const app = express()
 app.use(express.json())
@@ -11,7 +12,15 @@ app.get('/', (request, response) => {
 })
 
 app.get('/words', (request, response) => {
-    response.json(jmdict)
+    let res = { words: [] }
+
+    jmdict['words'].forEach(word => {
+        let text = word.kana[0].text
+        let ans = convert(text, word.partOfSpeech)
+        res.words.push({ 'kanji': word.kanji, 'kana': word.kana, 'ans': ans})
+    })
+
+    response.json(res)
 })
 
 const PORT = process.env.PORT || 3001

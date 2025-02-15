@@ -61,16 +61,6 @@ const uaTable = new Map([
     ['ぷ', 'ぱ'],
 ]);
 
-const uExample = [
-    '読む',
-    '泳ぐ',
-    '立つ',
-    '行く',
-    '買う',
-    '話す',
-    '遊ぶ',
-]
-
 const uConvertPassive = (word) => {
     if (word === 'くる') return 'こられる'
     else if (word === 'する') return 'される'
@@ -104,15 +94,76 @@ const uConvertCausativePassive = (word) => {
         return `${slicedWord}${uaTable.get(lastLetter)}される`
 }
 
-const ruCheck = (word) => {
-    
+const ruConvertPassive = (word) => {
+    let slicedWord = word.slice(0, -1)
+
+    return `${slicedWord}られる`
+}
+
+const ruConvertCausative = (word) => {
+    let slicedWord = word.slice(0, -1)
+
+    return `${slicedWord}させる`
+}
+
+const ruConvertCausativePassive = (word) => {
+    let slicedWord = word.slice(0, -1)
+
+    return `${slicedWord}させられる`
 }
 
 
+/*
+    Converts word into respective tense
+    (passive by default)
+    
+    Options are: 'pas', 'c', 'c-pas'
 
-// uExample.forEach(word => console.log(word, '->', uConvertPassive(word)))
-// uExample.forEach(word => console.log(word, '->', uConvertCausative(word)))
-uExample.forEach(word => console.log(word, '->', uConvertCausativePassive(word)))
+    Returns undefined on error
+*/
+const convert = (word, pos, tense = 'pas') => {
+    if (tense !== 'pas' && tense !== 'c' && tense !== 'c-pas')
+        throw { name: "WrongParameters", message: "Parameters should be pas, c, or c-pas"}
 
+    let ans;
 
+    if (pos.includes('v1')) {
+        switch (tense) {
+            case 'pas': 
+                ans = ruConvertPassive(word)
+                break
+            case 'c':
+                ans = ruConvertCausative(word)
+                break
+            case 'c-pas':
+                ans = ruConvertCausativePassive(word)
+                break
+        }
+    }
+    else {
+        switch (tense) {
+            case 'pas': 
+                ans = uConvertPassive(word)
+                break
+            case 'c':
+                ans = uConvertCausative(word)
+                break
+            case 'c-pas':
+                ans = uConvertCausativePassive(word)
+                break
+        }
+    }
 
+    return ans
+}
+
+/* Example use case
+    const example = require('../data/short-verbs.json')
+
+    example['words'].forEach(word => {
+        let text = word.kanji.length ? word.kanji[0].text : word.kana[0].text
+        console.log(text, '-->', convert(text, word.partOfSpeech))
+    }) 
+*/
+
+module.exports = { convert }

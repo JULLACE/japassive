@@ -19,7 +19,7 @@ const QuestionDisplay = ({ dict }) => {
             : selectedWord.kana[0].text
         
         setQuestion(text)
-        console.log(answer)
+        console.log(dict)
     }
 
     useEffect(() => { bind(document.getElementById('ans')) }, [])
