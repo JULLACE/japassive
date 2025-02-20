@@ -1,5 +1,6 @@
+import '../css/qbox.css'
 import { useEffect, useState } from 'react'
-import { bind } from 'wanakana'
+import { bind, toHiragana } from 'wanakana'
 
 const QuestionDisplay = ({ dict }) => {
     const [answer, setAnswer] = useState('')
@@ -11,7 +12,7 @@ const QuestionDisplay = ({ dict }) => {
         e.preventDefault()
 
         if (answer === '') {
-            // do something and return
+            // Handle empty answer string case (maybe highlight text box)
             return
         }
 
@@ -27,8 +28,7 @@ const QuestionDisplay = ({ dict }) => {
     const checkAnswer = () => {
         document.getElementById('ans').readOnly = true
 
-        if (answer === correct) {
-            setQuestion('ding dong')
+        if (answer === toHiragana(correct)) {
             document.getElementById('ques').className = 'q-box q-box-correct'
         }
         else {
@@ -57,7 +57,7 @@ const QuestionDisplay = ({ dict }) => {
     useEffect(() => { if (dict.length) changeQuestion() }, [dict])
 
     return (
-        <>
+        <div className="app-box">
             <div id='ques' className="q-box">
                 <p> {question} </p>
             </div>
@@ -71,7 +71,7 @@ const QuestionDisplay = ({ dict }) => {
                     />
                 </form>
             </div>
-        </>
+        </div>
     )
 }
 

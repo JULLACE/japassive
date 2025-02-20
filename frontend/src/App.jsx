@@ -1,4 +1,5 @@
-import QuestionDisplay from "./components/QuestionDisplay"
+import QuestionDisplay from './components/QuestionDisplay'
+import Navbar from './components/Navbar'
 
 import api from './services/api'
 import { useEffect, useState } from 'react'
@@ -14,8 +15,10 @@ function App() {
   }, [])
 
   return (
-    <div className="app-box">
+    <div className='main'>
+      <Navbar />
       <QuestionDisplay dict={dict} />
+      <div></div>
     </div>
   )
 }
