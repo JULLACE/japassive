@@ -37,7 +37,7 @@
   text-align: center;
 }
 
-.a-box form, input{
+.a-box form, .a-box input {
   height: 100%;
   width: 100%;
   text-align: center;
